@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Field } from 'formik';
 import Textbox from './fields/Textbox';
 import SubmitBtn from './fields/SubmitBtn';
+import YearPickerField from './fields/YearPickerField';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <form onSubmit={props.handleSubmit}>
               <Field component={Textbox} type="text" label="Email" name="email" placeholder="Email" />
               <Field component={Textbox} multiline label="Email" name="message" placeholder="Message" />
+              <Field component={YearPickerField} label="Year" name="year" placeholder="Year" />
               <SubmitBtn isSubmitting={ props.isSubmitting } />
             </form>
           )
