@@ -1,31 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Monthpicker from '../components/Monthpicker';
 
-const Textbox = ({ field: { onChange, onBlur, name, value }, form: { touched, errors }, label, help, multiline, ...props }) => {
+const MonthPickerField = ({ field: { name, value }, form: { setFieldValue, touched, errors }, label, help, multiline, ...props }) => {
     const invalid = touched[name] && errors[name];
-    let [text, setText] = useState(value);
-    let Component = multiline ? 'textarea' : 'input';
-
     return (
         <div className="form-group">
             { label && <label htmlFor={ name }>{ label }</label> }
-            <Component
+            <Monthpicker
                 className={ invalid ? 'form-control is-invalid' : 'form-control' } 
                 { ...props } 
                 id={ name }
-                value={ text }
                 name={ name }
-                onChange={(e) => {
-                    setText(e.target.value)
-                }}
-                onBlur={(e) => {
-                    onBlur(e);
-                    onChange(e);
+                value={ value }
+                onChange={value => {
+                    setFieldValue(name, value);
                 }}
             />
             { invalid && <div className="invalid-feedback">{ invalid }</div> }
             { help && <small className="form-text text-muted">{ help }</small> }
         </div>
-    );
+    )
 };
 
-export default Textbox;
+export default MonthPickerField;

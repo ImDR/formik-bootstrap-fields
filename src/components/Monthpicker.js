@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-const Yearpicker = ({ onChange, value = '', startYear = 1950, endYear = new Date().getFullYear(), ...props }) => {
+const Monthpicker = ({ onChange, value = '', ...props }) => {
     let [isOpen, setIsOpen] = useState(false);
     const node = useRef();
     const handleClick = (e) => {
@@ -12,17 +12,8 @@ const Yearpicker = ({ onChange, value = '', startYear = 1950, endYear = new Date
         }
     }
 
-    const items = [];
-    for (let i = startYear; i <= endYear; i++) {
-        items.push(
-            <li key={i} style={{ padding: '5px 10px' }} onClick={() => {
-                onChange(i);
-                setIsOpen(false);
-            }} >
-                {i}
-            </li>
-        );
-    }
+    const months = ["January","February","March","April","May","June","July",
+    "August","September","October","November","December"];
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClick);
@@ -33,13 +24,22 @@ const Yearpicker = ({ onChange, value = '', startYear = 1950, endYear = new Date
 
     return (
         <div ref={node} style={{ position: 'relative' }}>
-            <input value={value} {...props} readOnly />
+            <input value={ months[value] || '' } {...props} readOnly />
             {isOpen && <Scrollbars style={{ height: 150 }}>
                 <ul style={{
                     listStyle: 'none',
                     padding: 0
                 }}>
-                    {items}
+                    {
+                        months.map((month, index) => (
+                            <li key={index} style={{ padding: '5px 10px' }} onClick={() => {
+                                onChange(index);
+                                setIsOpen(false);
+                            }} >
+                                { month }
+                            </li>
+                        ))
+                    }
                 </ul>
             </Scrollbars>
             }
@@ -47,4 +47,4 @@ const Yearpicker = ({ onChange, value = '', startYear = 1950, endYear = new Date
     );
 }
 
-export default Yearpicker;
+export default Monthpicker;
